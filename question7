@@ -1,0 +1,60 @@
+question 7
+Consider the following data frame containing a family name, gender of the family member and her/his monthly 
+income in each record.
+FamilyName Gender MonthlyIncome (Rs.)
+Shah Male 44000.00
+Vats Male 65000.00
+Vats Female 43150.00
+Kumar Female 66500.00
+Vats Female 255000.00
+Kumar Male 103000.00
+Shah Male 55000.00
+Shah Female 112400.00
+Kumar Female 81030.00
+Vats Male 71900.00
+Write a program in Python using Pandas to perform the following:
+a. Calculate and display familywise gross monthly income.
+b. Display the highest and lowest monthly income for each family name
+c. Calculate and display monthly income of all members earning income less than Rs. 80000.00.
+d. Display total number of females along with their average monthly income 
+e. Delete rows with Monthly income less than the average income of all members
+
+
+
+
+
+
+import pandas as pd
+
+# Create the DataFrame
+data = {'FamilyName': ['Shah', 'Vats', 'Vats', 'Kumar', 'Vats', 'Kumar', 'Shah', 'Shah', 'Kumar', 'Vats'],
+        'Gender': ['Male', 'Male', 'Female', 'Female', 'Female', 'Male', 'Male', 'Female', 'Female', 'Male'],
+        'MonthlyIncome': [44000.00, 65000.00, 43150.00, 66500.00, 255000.00, 103000.00, 55000.00, 112400.00, 81030.00, 71900.00]}
+
+df = pd.DataFrame(data)
+
+# a. Calculate and display familywise gross monthly income
+familywise_income = df.groupby('FamilyName')['MonthlyIncome'].sum()
+print("a. Familywise gross monthly income:")
+print(familywise_income)
+
+# b. Display the highest and lowest monthly income for each family name
+income_stats = df.groupby('FamilyName')['MonthlyIncome'].agg(['max', 'min'])
+print("\nb. Highest and lowest monthly income for each family name:")
+print(income_stats)
+
+# c. Calculate and display monthly income of all members earning less than Rs. 80000.00
+income_below_80000 = df[df['MonthlyIncome'] < 80000.00]
+print("\nc. Monthly income of members earning less than Rs. 80000.00:")
+print(income_below_80000[['FamilyName', 'MonthlyIncome']])
+
+# d. Display total number of females along with their average monthly income
+female_stats = df[df['Gender'] == 'Female'].groupby('FamilyName')['MonthlyIncome'].agg(['count', 'mean'])
+print("\nd. Total number of females and their average monthly income:")
+print(female_stats)
+
+# e. Delete rows with Monthly income less than the average income of all members
+average_income = df['MonthlyIncome'].mean()
+df = df[df['MonthlyIncome'] >= average_income]
+print("\ne. DataFrame after deleting rows with monthly income less than the average:")
+print(df)
