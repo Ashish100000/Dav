@@ -1,0 +1,100 @@
+import numpy as np
+
+#qiestion:1:- A
+#Create a two dimensional array, ARR1 having random values from 0 to 1.
+#Compute the mean, standard deviation, and variance of ARR1 along the
+#second axis.
+
+
+ARR1 = np.random.uniform(0,1,size=(5, 5))
+print("ARR1:-\n", ARR1)
+
+#now we will fine the mean of the ARR1
+mean_ARR1 = np.mean(ARR1,axis = 1)
+print("mean of the ARR1 :- \n",mean_ARR1)
+
+
+#now we will find the standard deviation of the ARR1
+std_ARR1 = np.std(ARR1,axis = 1 )
+print("standard deviation of ARR1 = \n", std_ARR1)
+
+#now we will find the variance of the ARR1
+var_ARR1 = np.var(ARR1,axis=1 )
+print("variance of the ARR1:-\n",var_ARR1)
+
+
+#Question1:-B
+#Create a 2-dimensional array of size m x n integer elements, also print the shape,
+#type and data type of the array and then reshape it into an n x m array, where
+#n and m are user inputs given at the run time.
+
+m= int(input("enter the number of rows : - "))
+n = int(input("enter the number of columns :- "))
+Arr2 = np.random.rand(m,n)
+print("Array2 :- " , Arr2)
+
+#now we will print the shape of the array2
+shape_Arr2 = np.shape(Arr2)
+print(shape_Arr2)
+
+#now we will print the data type  of the array2
+type_Arr2 = Arr2.dtype
+print(type_Arr2)
+
+#now we will do reshape of Arr2 from m X n to n X m
+reshape_Arr2 = np.reshape(Arr2, (n,m))
+print(reshape_Arr2)
+
+#Question 1: C
+#Test whether the elements of a given 1D array are zero, non-zero and NaN.
+#Record the indices of these elements in three separate arrays.
+
+Arr3 = np.array([1,4,3,0,0,np.nan,6,9])
+print(Arr3)
+
+zero_index = np.where(Arr3 == 0)[0]
+non_zero_indexes = np.where(Arr3 != 0)[0]
+nan_indices = np.where( np.isnan(Arr3))[0]
+
+print("indics of zero elements: ", zero_index)
+
+print("indics of non-zero elements: ", non_zero_indexes )
+
+print("indics of nan elements: ", nan_indices)
+
+#Question:-1  (d):- Create three random arrays of the same size: Array1, Array2
+#and Array3. Subtract Array 2 from Array3  and store in Array4. Create another
+#array Array5 having two times the values in Array1. Find Covariance and
+#Correlation of Array1 with Array4 and Array5 respectively.
+
+
+arr1 = np.random.rand(5,3)
+arr2 = np.random.rand(5,3)
+arr3 = np.random.rand(5,3)
+
+arr4 = arr3-arr2
+arr5 = 2*arr1
+
+covariance = np.cov(arr1, arr4)[0,1]
+correlation =np.corrcoef(arr1,arr5)[0,1]
+
+print(arr1)
+print(arr2)
+print(arr3)
+print(arr4)
+print(arr5)
+print("covariance",covariance)
+print("correlation",correlation)
+
+
+#Question 1 : (E)
+#Create two random arrays of the same size 10: Array1, and Array2.Find the sum
+#of the first half of both the arrays and product of the second half of both the arrays
+array1 = np.random.rand(10)
+print("array1",array1)
+array2 = np.random.rand(10)
+print("array2",array2)
+sum_first_half = np.sum(array1[:5]+array2[:5])
+product_second_half = np.prod(array1[5:]+ array2[5:])
+print("sum of first half : ", sum_first_half  )
+print("product of second half : ", product_second_half)
