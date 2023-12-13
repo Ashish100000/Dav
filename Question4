@@ -1,0 +1,33 @@
+import pandas as pd
+
+# Assuming you have two Excel files named 'workshop1.xlsx' and 'workshop2.xlsx'
+# with sheets named 'Sheet1' containing the attendance data
+
+# Load data from the first Excel file into a DataFrame
+df1 = pd.read_excel('workshop.xlsx', sheet_name='Sheet1')
+
+# Load data from the second Excel file into another DataFrame
+df2 = pd.read_excel('workshop2.xlsx', sheet_name='Sheet1')
+
+# a. Perform merging to find names of students who attended both workshops
+common_attendees = pd.merge(df1, df2, on='Name', how='inner')
+print("a. Names of students who attended both workshops:")
+print(common_attendees['Name'].unique())
+
+# b. Find names of all students who attended a single workshop only
+single_workshop_attendees = pd.merge(df1, df2, on='Name', how='outer', indicator=True)
+single_workshop_only = single_workshop_attendees[single_workshop_attendees['_merge'] == 'left_only']['Name']
+print("\nb. Names of students who attended a single workshop only:")
+print(single_workshop_only.unique())
+
+# c. Merge two data frames row-wise and find the total number of records
+merged_row_wise = pd.concat([df1, df2], ignore_index=True)
+total_records = len(merged_row_wise)
+print("\nc. Total number of records in the merged data frame:")
+print(total_records)
+
+# d. Merge two data frames row-wise with hierarchical indexing and generate descriptive statistics
+merged_hierarchical = pd.concat([df1.set_index(['Name', 'Date']), df2.set_index(['Name', 'Date'])])
+statistics = merged_hierarchical.describe()
+print("\nd. Descriptive statistics for the hierarchical data frame:")
+print(statistics)
